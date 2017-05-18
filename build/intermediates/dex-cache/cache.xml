@@ -7,8 +7,26 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="af426f6b0fa5b5e7a2d37fa58150519e761c43eb">
+        sha1="3ebac90a9d7c711e817ba91e85b16e18c50e791f">
         <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_9e0b60ca604e0d021dd77ca8aaa0aa66f974cd36/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/josh/.android/build-cache/7611464bdb9f5cce217026a6944f200eba0e59a6/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_83b25b811b58fa779965561ed2a1ea760d5c77de/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/josh/.android/build-cache/d97e7cf2cfccc8766151568f6fc5870f0abb5197/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_29ec595663fcba043c96dc6323735b9611bbdfde/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -18,6 +36,15 @@
         revision="25.0.3"
         sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
         <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_819bee7d0d5d8b8255b86b9c1e80a9b5997144ad/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/josh/.android/build-cache/67d3fd0e4545bcec39af2ca0ab564bbee937f1c3/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_7bc5e8b4363d7126c8ebffe24a591a5e2218679b/classes.dex" />
     </item>
 
 </items>

@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Inventory-App</string>
+    <string name="app_name">Inventory App</string>
+    <string name="empty_view_title_text">No products found.</string>
+    <string name="empty_view_subtitle_text">Get started by adding a product.</string>
+    <string name="action_delete_all_entries">Delete All Products</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_save">Save</string>
 </resources>
