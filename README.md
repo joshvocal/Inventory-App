@@ -23,3 +23,6 @@ This app is [a project](https://www.udacity.com/course/android-basics-data-stora
 * Order button
 * Delete button
 
+## Credit
+[ic_cart.png](https://github.com/joshvocal/Inventory-App/blob/master/app/src/main/res/drawable-hdpi/ic_cart.png) designed by Madebyoliver from Flaticon
+
