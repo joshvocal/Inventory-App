@@ -1,4 +1,4 @@
-# Inventory App
+# Inventory App (In progress)
 
 ## Description :pencil:
 
