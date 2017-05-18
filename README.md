@@ -10,7 +10,7 @@ This app is [a project](https://www.udacity.com/course/android-basics-data-stora
 
 ## Screenshots :iphone:
 
-[No products screenshot](https://github.com/joshvocal/Inventory-App/blob/master/demo/screenshot-no-products.png)
+![No products screenshot](https://github.com/joshvocal/Inventory-App/blob/master/demo/screenshot-no-products.png)
 
 ## Functionality :hand:
 
