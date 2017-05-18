@@ -2,31 +2,58 @@
 <items version="2" >
 
     <item
+        is-multidex="false"
+        jar="/home/josh/.android/build-cache/67d3fd0e4545bcec39af2ca0ab564bbee937f1c3/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/pre-dexed/debug/classes_7bc5e8b4363d7126c8ebffe24a591a5e2218679b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/josh/.android/build-cache/45df5cf60f7fe7ef735f189b648e7a28d8f818b8/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/pre-dexed/debug/classes_b2b948f389cc365b1a6201317351373e4a87dac4.jar" />
+    </item>
+    <item
         is-multidex="true"
         jar="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="3ebac90a9d7c711e817ba91e85b16e18c50e791f">
+        sha1="87d34f0dea0e978eb7a8cc0d899580355b69d437">
         <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_9e0b60ca604e0d021dd77ca8aaa0aa66f974cd36/classes.dex" />
     </item>
     <item
-        is-multidex="true"
-        jar="/home/josh/.android/build-cache/7611464bdb9f5cce217026a6944f200eba0e59a6/output/jars/classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/home/josh/.android/build-cache/5a640085260f1210ed5ca7e7df1a2751e982ec1a/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
-        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_83b25b811b58fa779965561ed2a1ea760d5c77de/classes.dex" />
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/pre-dexed/debug/classes_3d99496d051acba219457b0f9d6da077ec59417c.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/home/josh/.android/build-cache/d97e7cf2cfccc8766151568f6fc5870f0abb5197/output/jars/classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/home/josh/.android/build-cache/2618c9276c432b2d71eb5534d15ce6a826c4ec1a/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="95519720620b553f63afc789beba9ad582807f7c">
-        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_29ec595663fcba043c96dc6323735b9611bbdfde/classes.dex" />
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/pre-dexed/debug/classes_8e2b090cff0e315baee920656f3f7155ecb5764e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/josh/.android/build-cache/3ec432d20158e07738a1e48b4f22ff673dd7f8a2/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/pre-dexed/debug/classes_0e46a02a6e04f560fcc23f7756cb6a9747103e36.jar" />
     </item>
     <item
         is-multidex="true"
@@ -38,13 +65,94 @@
         <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_819bee7d0d5d8b8255b86b9c1e80a9b5997144ad/classes.dex" />
     </item>
     <item
-        is-multidex="true"
-        jar="/home/josh/.android/build-cache/67d3fd0e4545bcec39af2ca0ab564bbee937f1c3/output/jars/classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/home/josh/.android/build-cache/c8126d6c7ee0d4ce0769f0ee4f6261e405eba4d9/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
-        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_7bc5e8b4363d7126c8ebffe24a591a5e2218679b/classes.dex" />
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/pre-dexed/debug/classes_0f1e1336a9ce42252c03ec10cad6f5b019f6ae26.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/josh/.android/build-cache/7611464bdb9f5cce217026a6944f200eba0e59a6/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/pre-dexed/debug/classes_83b25b811b58fa779965561ed2a1ea760d5c77de.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/josh/.android/build-cache/a7f91045108f46c751456255330ae4cbf366db1d/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/pre-dexed/debug/classes_fb387594405596dedf4969cd989cf62952a8154c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/josh/.android/build-cache/e77e3f3804227f03dc197957636bbf44ba82c399/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/pre-dexed/debug/classes_9c6f3fbd7123d181b31217d69552e5edcfa1834d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/josh/.android/build-cache/d97e7cf2cfccc8766151568f6fc5870f0abb5197/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/pre-dexed/debug/classes_29ec595663fcba043c96dc6323735b9611bbdfde.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/josh/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.1/support-annotations-25.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/pre-dexed/debug/support-annotations-25.3.1_97dba8253cd3f93bd827c69df9f2678cbb9a3cf9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/josh/.android/build-cache/0aa5ff56fc14019cc5c098728b8fbe3d346bf7e8/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/pre-dexed/debug/classes_0f1fb54b7df9e1905b7227965fc31134a1af27a4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/josh/.android/build-cache/c3c268a27c6c0f5de392e12fdfb50a5152b6f9f0/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/pre-dexed/debug/classes_dbc59a687ea7159627154fdc94b360e8dc29d623.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/josh/.android/build-cache/744b6651926145394d7423ff4dbbaebf50e784e0/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/pre-dexed/debug/classes_0570b46b711bf463ecb626c83c559013aa46648b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/josh/Android/Sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="/home/josh/AndroidStudioProjects/Inventory-App/app/build/intermediates/pre-dexed/debug/constraint-layout-solver-1.0.2_c0bb8dda78ee61636a1f14676966b66d3a5103cd.jar" />
     </item>
 
 </items>

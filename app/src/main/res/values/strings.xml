@@ -5,4 +5,12 @@
     <string name="action_delete_all_entries">Delete All Products</string>
     <string name="action_delete">Delete</string>
     <string name="action_save">Save</string>
+    <string name="hint_product_name">Name</string>
+    <string name="hint_product_price">Price</string>
+    <string name="hint_product_quantity">Quantity</string>
+    <string name="category_supplier">Supplier</string>
+    <string name="hint_product_email">E-mail</string>
+    <string name="category_overview">Overview</string>
+    <string name="category_image">Image</string>
+    <string name="action_add_photo">Add photo</string>
 </resources>

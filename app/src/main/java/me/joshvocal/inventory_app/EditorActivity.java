@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 public class EditorActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,10 +28,16 @@ public class EditorActivity extends AppCompatActivity {
         // User clicked on a menu option in the app bar overflow menu
         switch (item.getItemId()) {
             case R.id.action_save:
+                // TODO:
                 return true;
             case R.id.action_delete:
+                // TODO:
+                return true;
+            case R.id.action_add_photo:
+                // TODO:
                 return true;
             case android.R.id.home:
+                // TODO:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
         }
