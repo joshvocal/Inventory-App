@@ -1,4 +1,4 @@
-# Inventory-App
+# Inventory App
 
 ## Description :pencil:
 
@@ -7,6 +7,10 @@ An android app to track the inventory of a store, including current stock and su
 This app is [a project](https://www.udacity.com/course/android-basics-data-storage--ud845) that is part of the [Android Basics Nanodegree Program by Google at Udacity](https://www.udacity.com/course/android-basics-nanodegree-by-google--nd803).
 
 ## Demo :iphone:
+
+## Screenshots :iphone:
+
+[No products screenshot](https://github.com/joshvocal/Inventory-App/blob/master/demo/screenshot-no-products.png)
 
 ## Functionality :hand:
 
