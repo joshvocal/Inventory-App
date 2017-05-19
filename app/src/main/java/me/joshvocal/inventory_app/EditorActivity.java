@@ -1,11 +1,13 @@
 package me.joshvocal.inventory_app;
 
+import android.Manifest;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,7 +15,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -44,7 +48,10 @@ public class EditorActivity extends AppCompatActivity
 
     // Identifier for the product data loader.
     private static final int EXISTING_PRODUCT_LOADER = 0;
-    static final int REQUEST_TAKE_PHOTO = 1;
+    private static final int REQUEST_TAKE_PHOTO = 1;
+    private static final int MY_PERMISSIONS_REQUEST_CAMERA = 2;
+    private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 3;
+    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 4;
 
     private String mCurrentPhotoPath;
 
@@ -197,7 +204,7 @@ public class EditorActivity extends AppCompatActivity
                 return true;
             case R.id.action_add_photo:
                 // Take a picture.
-                dispatchTakePictureIntent();
+                requestPermissions();
                 // Set the picture to the imageView.
                 //setPic();
                 return true;
@@ -454,6 +461,52 @@ public class EditorActivity extends AppCompatActivity
 
         // Show dialog that there are unsaved changes.
         showUnsavedChangesDialog(discardButtonClickListener);
+    }
+
+    private void requestPermissions() {
+
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(EditorActivity.this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(EditorActivity.this,
+                    new String[]{Manifest.permission.CAMERA},
+                    MY_PERMISSIONS_REQUEST_CAMERA);
+        }
+
+        if (ContextCompat.checkSelfPermission(EditorActivity.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(EditorActivity.this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+        }
+
+        if (ContextCompat.checkSelfPermission(EditorActivity.this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(EditorActivity.this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CAMERA:
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    dispatchTakePictureIntent();
+                } else {
+                    requestPermissions();
+                }
+        }
     }
 
     private void dispatchTakePictureIntent() {
