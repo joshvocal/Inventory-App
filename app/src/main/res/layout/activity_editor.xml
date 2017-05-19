@@ -115,5 +115,69 @@
 
             </LinearLayout>
         </LinearLayout>
+
+        <!-- Change quantity category -->
+        <LinearLayout
+            android:id="@+id/container_change_quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Label -->
+            <TextView
+                style="@style/CategoryStyle"
+                android:text="Change Quantity" />
+
+            <!-- Input field -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/button_track_sale"
+                    style="@style/EditorFieldStyle"
+                    android:gravity="center"
+                    android:hint="Track Sale"/>
+
+                <Button
+                    android:id="@+id/button_receive_shipment"
+                    style="@style/EditorFieldStyle"
+                    android:gravity="center"
+                    android:hint="Receive Shipment"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Email Action category -->
+        <LinearLayout
+            android:id="@+id/container_email_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Label -->
+            <TextView
+                style="@style/CategoryStyle"
+                android:text="Email Action" />
+
+            <!-- Input field -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/button_order_suplier"
+                    style="@style/EditorFieldStyle"
+                    android:gravity="center"
+                    android:hint="Order from Supplier"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
     </LinearLayout>
 </ScrollView>
