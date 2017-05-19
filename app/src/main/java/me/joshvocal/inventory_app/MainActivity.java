@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity
         inventoryListView.setEmptyView(emptyView);
 
         // Setup an Adapter to create a list item for each row of product data in the Cursor.
-        // There is no pet data yet (until the loader finishes) to pass in null for the Cursor.
+        // There is no product data yet (until the loader finishes) to pass in null for the Cursor.
         mCursorAdapter = new InventoryCursorAdapter(this, null);
         inventoryListView.setAdapter(mCursorAdapter);
 
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity
                 // Set the URI on the data field of the intent.
                 intent.setData(currentUri);
 
-                // Launch the EditorActivity to display the data for the current pet.
+                // Launch the EditorActivity to display the data for the current product.
                 startActivity(intent);
             }
         });
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        // Update {@link InventoryCursorAdapter} with this new cursor containing updated pet data.
+        // Update {@link InventoryCursorAdapter} with this new cursor containing updated product data.
         mCursorAdapter.swapCursor(data);
     }
 

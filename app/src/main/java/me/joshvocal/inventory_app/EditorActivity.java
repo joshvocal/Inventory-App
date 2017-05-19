@@ -36,16 +36,16 @@ import me.joshvocal.inventory_app.data.InventoryContract.ProductEntry;
 public class EditorActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    // Boolean flag that keeps track of whether the pet has been edited (true) or not (false).
+    // Boolean flag that keeps track of whether the product has been edited (true) or not (false).
     private boolean mProductHasChanged = false;
 
-    // Identifier for the pet data loader.
+    // Identifier for the product data loader.
     private static final int EXISTING_PRODUCT_LOADER = 0;
     static final int REQUEST_TAKE_PHOTO = 1;
 
     private String mCurrentPhotoPath;
 
-    // Content URI for the existing product (null if it's a new pet)
+    // Content URI for the existing product (null if it's a new product)
     private Uri mCurrentProductUri;
 
     private EditText mNameEditText;
@@ -116,11 +116,12 @@ public class EditorActivity extends AppCompatActivity
                 return true;
             case R.id.action_delete:
                 showDeleteConfirmationDialog();
-                setPic();
                 return true;
             case R.id.action_add_photo:
-                // TODO:
+                // Take a picture.
                 dispatchTakePictureIntent();
+                // Set the picture to the imageView.
+                //setPic();
                 return true;
             case android.R.id.home:
                 // If the product hasn't changed, continue with handling back button press
@@ -160,8 +161,8 @@ public class EditorActivity extends AppCompatActivity
             return null;
         }
 
-        // Since the editor shows all pet attributes, define a projection that contains
-        // all columns from the pet table.
+        // Since the editor shows all product attributes, define a projection that contains
+        // all columns from the inventory table.
         String[] projection = {
                 ProductEntry._ID,
                 ProductEntry.COLUMN_PRODUCT_NAME,
@@ -173,7 +174,7 @@ public class EditorActivity extends AppCompatActivity
 
         // This loader will execute the ContentProvider's query method on a background thread.
         return new CursorLoader(this,   // Parent activity context
-                mCurrentProductUri,     // Query the content URI for the current pet
+                mCurrentProductUri,     // Query the content URI for the current product
                 projection,             // Columns to include in the resulting Cursor
                 null,                   // No selection clause
                 null,                   // No selection arguments
@@ -202,14 +203,17 @@ public class EditorActivity extends AppCompatActivity
             int price = cursor.getInt(priceColumnIndex);
             int quantity = cursor.getInt(quantityColumnIndex);
             String email = cursor.getString(emailColumnIndex);
-            String photoPath = cursor.getString(pictureColumnIndex);
+            String picturePath = cursor.getString(pictureColumnIndex);
+            Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
+
+            mCurrentPhotoPath = picturePath;
 
             // Update the views on the screen with the values.
             mNameEditText.setText(name);
             mPriceEditText.setText(Integer.toString(price));
             mQuantityEditText.setText(Integer.toString(quantity));
             mEmailEditText.setText(email);
-            //mPictureImageView.setImageBitmap();
+            mPictureImageView.setImageBitmap(bitmap);
         }
     }
 
@@ -223,7 +227,7 @@ public class EditorActivity extends AppCompatActivity
     }
 
     /**
-     * Get user input from editor and save new pet into database.
+     * Get user input from editor and save new product into database.
      */
     private void saveProduct() {
         // Read from input fields
@@ -233,6 +237,7 @@ public class EditorActivity extends AppCompatActivity
         String quantityString = mQuantityEditText.getText().toString().trim();
         String emailString = mEmailEditText.getText().toString().trim();
         String photoPathString = mCurrentPhotoPath;
+
 
         // Create a ContentValues object where column names are the keys,
         // and product attributes from the editor are the values.
@@ -249,7 +254,7 @@ public class EditorActivity extends AppCompatActivity
 
             // Show a toast message depending on whether or not the insertion was successful.
             if (newUri == null) {
-                Toast.makeText(this, "Error with saving pet", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Error with saving product", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Product Saved", Toast.LENGTH_SHORT).show();
             }
@@ -261,7 +266,7 @@ public class EditorActivity extends AppCompatActivity
             if (rowsAffected == 0) {
                 Toast.makeText(this, "Error with updating product", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Pet updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Product updated", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -270,9 +275,9 @@ public class EditorActivity extends AppCompatActivity
     private void deleteProduct() {
         // Only perform the delete if this is an existing product.
         if (mCurrentProductUri != null) {
-            // Call the ContentResolver to delete the pet at the given content URI.
-            // Pass in null for the selection and selection args because the mCurrentPetUri
-            // content URI already identifies the pet that we want.
+            // Call the ContentResolver to delete the product at the given content URI.
+            // Pass in null for the selection and selection args because the mCurrentProductUri
+            // content URI already identifies the product that we want.
             int rowsDeleted = getContentResolver().delete(mCurrentProductUri, null, null);
 
             // Show a toast message depending on whether or not the delete was successful.
@@ -297,7 +302,7 @@ public class EditorActivity extends AppCompatActivity
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // User clicked the "Keep editing" button so dismiss the dialog
-                // and continue editing the pet.
+                // and continue editing the product.
                 if (dialog != null) {
                     dialog.dismiss();
                 }
@@ -316,14 +321,14 @@ public class EditorActivity extends AppCompatActivity
         builder.setMessage("Delete this product?");
         builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // User clicked the "Delete" button, so delete the pet.
+                // User clicked the "Delete" button, so delete the product.
                 deleteProduct();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Cancel" button, so dismiss the dialog
-                // and continue editing the pet.
+                // and continue editing the product.
                 if (dialog != null) {
                     dialog.dismiss();
                 }
@@ -393,32 +398,22 @@ public class EditorActivity extends AppCompatActivity
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
-        Toast.makeText(this, mCurrentPhotoPath, Toast.LENGTH_SHORT).show();
 
         return image;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+            setPic();
+        }
+    }
+
     private void setPic() {
-        // Get the dimensions of the View
-        int targetW = mPictureImageView.getWidth();
-        int targetH = mPictureImageView.getHeight();
-
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        mPictureImageView.setImageBitmap(bitmap);
+        File file = new File(mCurrentPhotoPath);
+        if (file.exists()) {
+            Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
+            mPictureImageView.setImageBitmap(bitmap);
+        }
     }
 }

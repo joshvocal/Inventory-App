@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name="me.joshvocal.inventory_app.EditorActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
             android:parentActivityName="me.joshvocal.inventory_app.MainActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data

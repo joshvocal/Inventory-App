@@ -36,7 +36,6 @@
                     android:id="@+id/edit_product_image"
                     android:layout_width="match_parent"
                     android:layout_height="225dp"
-                    android:background="@color/colorGray"
                     android:inputType="textCapWords" />
 
             </LinearLayout>
@@ -64,6 +63,7 @@
                 <EditText
                     android:id="@+id/edit_product_name"
                     style="@style/EditorFieldStyle"
+                    android:gravity="center"
                     android:hint="@string/hint_product_name"
                     android:inputType="textCapWords" />
 
@@ -71,6 +71,7 @@
                 <EditText
                     android:id="@+id/edit_product_price"
                     style="@style/EditorFieldStyle"
+                    android:gravity="center"
                     android:hint="@string/hint_product_price"
                     android:inputType="numberDecimal" />
 
@@ -78,6 +79,7 @@
                 <EditText
                     android:id="@+id/edit_product_quantity"
                     style="@style/EditorFieldStyle"
+                    android:gravity="center"
                     android:hint="@string/hint_product_quantity"
                     android:inputType="number" />
 
@@ -107,6 +109,7 @@
                 <EditText
                     android:id="@+id/edit_product_email"
                     style="@style/EditorFieldStyle"
+                    android:gravity="center"
                     android:hint="@string/hint_product_email"
                     android:inputType="textEmailAddress" />
 
