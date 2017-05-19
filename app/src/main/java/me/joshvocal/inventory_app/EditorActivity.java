@@ -4,11 +4,17 @@ import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -19,6 +25,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import me.joshvocal.inventoroy_app.R;
 import me.joshvocal.inventory_app.data.InventoryContract.ProductEntry;
 
 public class EditorActivity extends AppCompatActivity
@@ -29,6 +41,9 @@ public class EditorActivity extends AppCompatActivity
 
     // Identifier for the pet data loader.
     private static final int EXISTING_PRODUCT_LOADER = 0;
+    static final int REQUEST_TAKE_PHOTO = 1;
+
+    private String mCurrentPhotoPath;
 
     // Content URI for the existing product (null if it's a new pet)
     private Uri mCurrentProductUri;
@@ -43,6 +58,19 @@ public class EditorActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
+
+        Intent intent = getIntent();
+        mCurrentProductUri = intent.getData();
+
+        // If the intent DOES NOT contain a product content URI, then we know that we are
+        // creating a new product.
+        if (mCurrentProductUri == null) {
+            // This is a new product
+            setTitle("Add New Product");
+        } else {
+            setTitle("Edit Product");
+            getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, this);
+        }
 
         // Find all relevant views that we will need to read user input from
         mNameEditText = (EditText) findViewById(R.id.edit_product_name);
@@ -88,9 +116,11 @@ public class EditorActivity extends AppCompatActivity
                 return true;
             case R.id.action_delete:
                 showDeleteConfirmationDialog();
+                setPic();
                 return true;
             case R.id.action_add_photo:
                 // TODO:
+                dispatchTakePictureIntent();
                 return true;
             case android.R.id.home:
                 // If the product hasn't changed, continue with handling back button press
@@ -172,7 +202,7 @@ public class EditorActivity extends AppCompatActivity
             int price = cursor.getInt(priceColumnIndex);
             int quantity = cursor.getInt(quantityColumnIndex);
             String email = cursor.getString(emailColumnIndex);
-            //String name = cursor.getString(nameColumnIndex);
+            String photoPath = cursor.getString(pictureColumnIndex);
 
             // Update the views on the screen with the values.
             mNameEditText.setText(name);
@@ -202,29 +232,58 @@ public class EditorActivity extends AppCompatActivity
         String priceString = mPriceEditText.getText().toString().trim();
         String quantityString = mQuantityEditText.getText().toString().trim();
         String emailString = mEmailEditText.getText().toString().trim();
-        //String pictureString = mImageImageView.getText().toString().trim();
+        String photoPathString = mCurrentPhotoPath;
 
         // Create a ContentValues object where column names are the keys,
         // and product attributes from the editor are the values.
         ContentValues values = new ContentValues();
         values.put(ProductEntry.COLUMN_PRODUCT_NAME, nameString);
-        values.put(ProductEntry.COLUMN_PRODUCT_PRICE, Integer.parseInt(priceString));
+        values.put(ProductEntry.COLUMN_PRODUCT_PRICE, Double.parseDouble(priceString));
         values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, Integer.parseInt(quantityString));
         values.put(ProductEntry.COLUMN_PRODUCT_SUPPLIER_EMAIL, emailString);
-        //values.put(ProductEntry.COLUMN_PRODUCT_NAME, nameString);
+        values.put(ProductEntry.COLUMN_PRODUCT_PICTURE, photoPathString);
 
-        Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
+        if (mCurrentProductUri == null) {
 
-        // Show a toast message depending on whether or not the insertion was successful.
-        if (newUri == null) {
-            Toast.makeText(this, "Error with saving pet", Toast.LENGTH_SHORT).show();
+            Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
+
+            // Show a toast message depending on whether or not the insertion was successful.
+            if (newUri == null) {
+                Toast.makeText(this, "Error with saving pet", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Product Saved", Toast.LENGTH_SHORT).show();
+            }
+
         } else {
-            Toast.makeText(this, "Product Saved", Toast.LENGTH_SHORT).show();
+
+            int rowsAffected = getContentResolver().update(mCurrentProductUri, values, null, null);
+
+            if (rowsAffected == 0) {
+                Toast.makeText(this, "Error with updating product", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Pet updated", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
+
     private void deleteProduct() {
-        //
+        // Only perform the delete if this is an existing product.
+        if (mCurrentProductUri != null) {
+            // Call the ContentResolver to delete the pet at the given content URI.
+            // Pass in null for the selection and selection args because the mCurrentPetUri
+            // content URI already identifies the pet that we want.
+            int rowsDeleted = getContentResolver().delete(mCurrentProductUri, null, null);
+
+            // Show a toast message depending on whether or not the delete was successful.
+            if (rowsDeleted == 0) {
+                // If no rows were deleted, then there was an error with the delete.
+                Toast.makeText(this, "Error with deleting product", Toast.LENGTH_SHORT).show();
+            } else {
+                // Otherwise, the delete was successful and we can display a toast.
+                Toast.makeText(this, "Product Deleted", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void showUnsavedChangesDialog(
@@ -297,5 +356,69 @@ public class EditorActivity extends AppCompatActivity
 
         // Show dialog that there are unsaved changes.
         showUnsavedChangesDialog(discardButtonClickListener);
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "me.joshvocal.inventory_app.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        Toast.makeText(this, mCurrentPhotoPath, Toast.LENGTH_SHORT).show();
+
+        return image;
+    }
+
+    private void setPic() {
+        // Get the dimensions of the View
+        int targetW = mPictureImageView.getWidth();
+        int targetH = mPictureImageView.getHeight();
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        mPictureImageView.setImageBitmap(bitmap);
     }
 }

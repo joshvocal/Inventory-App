@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+import me.joshvocal.inventoroy_app.R;
 import me.joshvocal.inventory_app.data.InventoryContract.ProductEntry;
 
 /**

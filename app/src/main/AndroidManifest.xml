@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.joshvocal.inventory_app">
+    package="me.joshvocal.inventoroy_app">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -9,25 +13,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="me.joshvocal.inventory_app.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EditorActivity"
-            android:parentActivityName=".MainActivity">
+        <activity android:name="me.joshvocal.inventory_app.EditorActivity"
+            android:parentActivityName="me.joshvocal.inventory_app.MainActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="me.joshvocal.inventory_app.MainActivity" />
         </activity>
         <provider
-            android:name=".data.InventoryProvider"
+            android:name="me.joshvocal.inventory_app.data.InventoryProvider"
             android:authorities="me.joshvocal.inventory_app"
             android:exported="false"
             />
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="me.joshvocal.inventory_app.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
+
     </application>
 
 </manifest>
