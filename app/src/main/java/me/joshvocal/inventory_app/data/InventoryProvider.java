@@ -166,16 +166,25 @@ public class InventoryProvider extends ContentProvider {
     }
 
     private Uri insertProduct(Uri uri, ContentValues values) {
-        // Check that the name is not null
-        String name = values.getAsString(ProductEntry.COLUMN_PRODUCT_NAME);
-        if (name == null) {
-            throw new IllegalArgumentException("Product requires a name");
+        if (values.containsKey(ProductEntry.COLUMN_PRODUCT_NAME)) {
+            String name = values.getAsString(ProductEntry.COLUMN_PRODUCT_NAME);
+            if (name == null) {
+                throw new IllegalArgumentException("Product requires a name");
+            }
         }
 
-        // Check that the price is not 0
-        int price = values.getAsInteger(ProductEntry.COLUMN_PRODUCT_PRICE);
-        if (price == 0) {
-            throw new IllegalArgumentException("Product requires a price");
+        if (values.containsKey(ProductEntry.COLUMN_PRODUCT_PRICE)) {
+            Double price = values.getAsDouble(ProductEntry.COLUMN_PRODUCT_PRICE);
+            if (price < 0) {
+                throw new IllegalArgumentException("Product requires a price");
+            }
+        }
+
+        if (values.containsKey(ProductEntry.COLUMN_PRODUCT_QUANTITY)) {
+            int quantity = values.getAsInteger(ProductEntry.COLUMN_PRODUCT_QUANTITY);
+            if (quantity < 0) {
+                throw new IllegalArgumentException("Product requires a quantity");
+            }
         }
 
         // Get writable database.
@@ -249,6 +258,20 @@ public class InventoryProvider extends ContentProvider {
             String name = values.getAsString(ProductEntry.COLUMN_PRODUCT_NAME);
             if (name == null) {
                 throw new IllegalArgumentException("Product requires a name");
+            }
+        }
+
+        if (values.containsKey(ProductEntry.COLUMN_PRODUCT_PRICE)) {
+            Double price = values.getAsDouble(ProductEntry.COLUMN_PRODUCT_PRICE);
+            if (price < 0) {
+                throw new IllegalArgumentException("Product requires a price");
+            }
+        }
+
+        if (values.containsKey(ProductEntry.COLUMN_PRODUCT_QUANTITY)) {
+            int quantity = values.getAsInteger(ProductEntry.COLUMN_PRODUCT_QUANTITY);
+            if (quantity < 0) {
+                throw new IllegalArgumentException("Product requires a quantity");
             }
         }
 

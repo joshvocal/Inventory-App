@@ -17,12 +17,15 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -34,7 +37,7 @@ import me.joshvocal.inventoroy_app.R;
 import me.joshvocal.inventory_app.data.InventoryContract.ProductEntry;
 
 public class EditorActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor> {
+        implements LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
 
     // Boolean flag that keeps track of whether the product has been edited (true) or not (false).
     private boolean mProductHasChanged = false;
@@ -54,10 +57,34 @@ public class EditorActivity extends AppCompatActivity
     private EditText mEmailEditText;
     private ImageView mPictureImageView;
 
+    private TextView mChangeQuantityTextView;
+    private Button mTrackSaleButton;
+    private Button mReceiveShipmentButton;
+    private TextView mEmailActionTextView;
+    private Button mOrderSupplierButton;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
+
+        // Find all relevant views that we will need to read user input from
+        mNameEditText = (EditText) findViewById(R.id.edit_product_name);
+        mPriceEditText = (EditText) findViewById(R.id.edit_product_price);
+        mQuantityEditText = (EditText) findViewById(R.id.edit_product_quantity);
+        mEmailEditText = (EditText) findViewById(R.id.edit_product_email);
+        mPictureImageView = (ImageView) findViewById(R.id.edit_product_image);
+
+        mChangeQuantityTextView = (TextView) findViewById(R.id.text_change_quantity);
+        mEmailActionTextView = (TextView) findViewById(R.id.text_email_action);
+
+        mTrackSaleButton = (Button) findViewById(R.id.button_track_sale);
+        mTrackSaleButton.setOnClickListener(this);
+        mReceiveShipmentButton = (Button) findViewById(R.id.button_receive_shipment);
+        mReceiveShipmentButton.setOnClickListener(this);
+        mOrderSupplierButton = (Button) findViewById(R.id.button_order_supplier);
+        mOrderSupplierButton.setOnClickListener(this);
 
         Intent intent = getIntent();
         mCurrentProductUri = intent.getData();
@@ -67,17 +94,31 @@ public class EditorActivity extends AppCompatActivity
         if (mCurrentProductUri == null) {
             // This is a new product
             setTitle("Add New Product");
+
+            mChangeQuantityTextView.setVisibility(View.GONE);
+            mTrackSaleButton.setVisibility(View.GONE);
+            mReceiveShipmentButton.setVisibility(View.GONE);
+            mEmailActionTextView.setVisibility(View.GONE);
+            mOrderSupplierButton.setVisibility(View.GONE);
+
         } else {
-            setTitle("Edit Product");
+
+            setTitle("Product Details");
+            mNameEditText.setEnabled(false);
+            mNameEditText.setBackground(null);
+
+            mPriceEditText.setEnabled(false);
+            mPriceEditText.setBackground(null);
+
+            mQuantityEditText.setEnabled(false);
+            mQuantityEditText.setBackground(null);
+
+            mEmailEditText.setEnabled(false);
+            mEmailEditText.setBackground(null);
+
             getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, this);
         }
 
-        // Find all relevant views that we will need to read user input from
-        mNameEditText = (EditText) findViewById(R.id.edit_product_name);
-        mPriceEditText = (EditText) findViewById(R.id.edit_product_price);
-        mQuantityEditText = (EditText) findViewById(R.id.edit_product_quantity);
-        mEmailEditText = (EditText) findViewById(R.id.edit_product_email);
-        mPictureImageView = (ImageView) findViewById(R.id.edit_product_image);
 
         // Setup OnTouchListeners on all the input fields, so we can determine if the user
         // has touched or modified them. This will let us know if there are unsaved changes
@@ -104,6 +145,43 @@ public class EditorActivity extends AppCompatActivity
         return super.onCreateOptionsMenu(menu);
     }
 
+    private void setEditMode() {
+        setTitle("Edit Product");
+
+        mNameEditText.setEnabled(true);
+        mPriceEditText.setEnabled(true);
+        mQuantityEditText.setEnabled(true);
+        mEmailEditText.setEnabled(true);
+
+        mChangeQuantityTextView.setVisibility(View.GONE);
+        mTrackSaleButton.setVisibility(View.GONE);
+        mReceiveShipmentButton.setVisibility(View.GONE);
+        mEmailActionTextView.setVisibility(View.GONE);
+        mOrderSupplierButton.setVisibility(View.GONE);
+    }
+
+    private void setDetailsMode() {
+        setTitle("Product Details");
+
+        mNameEditText.setEnabled(false);
+        mNameEditText.setBackground(null);
+
+        mPriceEditText.setEnabled(false);
+        mPriceEditText.setBackground(null);
+
+        mQuantityEditText.setEnabled(false);
+        mQuantityEditText.setBackground(null);
+
+        mEmailEditText.setEnabled(false);
+        mEmailEditText.setBackground(null);
+
+        mChangeQuantityTextView.setVisibility(View.VISIBLE);
+        mTrackSaleButton.setVisibility(View.VISIBLE);
+        mReceiveShipmentButton.setVisibility(View.VISIBLE);
+        mEmailActionTextView.setVisibility(View.VISIBLE);
+        mOrderSupplierButton.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // User clicked on a menu option in the app bar overflow menu
@@ -122,6 +200,12 @@ public class EditorActivity extends AppCompatActivity
                 dispatchTakePictureIntent();
                 // Set the picture to the imageView.
                 //setPic();
+                return true;
+            case R.id.action_details:
+                setDetailsMode();
+                return true;
+            case R.id.action_edit:
+                setEditMode();
                 return true;
             case android.R.id.home:
                 // If the product hasn't changed, continue with handling back button press
@@ -238,6 +322,13 @@ public class EditorActivity extends AppCompatActivity
         String emailString = mEmailEditText.getText().toString().trim();
         String photoPathString = mCurrentPhotoPath;
 
+        if (priceString.equals("")) {
+            priceString = "0";
+        }
+
+        if (quantityString.equals("")) {
+            quantityString = "0";
+        }
 
         // Create a ContentValues object where column names are the keys,
         // and product attributes from the editor are the values.
@@ -323,8 +414,10 @@ public class EditorActivity extends AppCompatActivity
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Delete" button, so delete the product.
                 deleteProduct();
+                finish();
             }
         });
+
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Cancel" button, so dismiss the dialog
@@ -414,6 +507,69 @@ public class EditorActivity extends AppCompatActivity
         if (file.exists()) {
             Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
             mPictureImageView.setImageBitmap(bitmap);
+        }
+    }
+
+    private void orderSupplier() {
+
+        String supplierEmail = mEmailEditText.getText().toString();
+        if (TextUtils.isEmpty(supplierEmail)) {
+            return;
+        }
+
+        Intent email = new Intent(Intent.ACTION_SENDTO);
+        email.setData(Uri.parse("mailto:")); // only email apps should handle this
+        email.putExtra(Intent.EXTRA_EMAIL, new String[]{supplierEmail});
+        email.putExtra(Intent.EXTRA_SUBJECT, "New order for " + mNameEditText.getText().toString());
+        email.putExtra(Intent.EXTRA_TEXT, "I would like to order a new shipment.");
+        if (email.resolveActivity(getPackageManager()) != null) {
+            startActivity(email);
+        }
+    }
+
+    private void receiveShipment() {
+        String quantityString = mQuantityEditText.getText().toString().trim();
+
+        if (!TextUtils.isEmpty(quantityString)) {
+            int quantity = Integer.parseInt(quantityString);
+            ContentValues values = new ContentValues();
+            values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, quantity + 10);
+
+            getContentResolver().update(mCurrentProductUri, values, null, null);
+        }
+    }
+
+    private void trackSale() {
+
+        String quantityString = mQuantityEditText.getText().toString().trim();
+
+        if (!TextUtils.isEmpty(quantityString)) {
+            int quantity = Integer.parseInt(quantityString);
+            ContentValues values = new ContentValues();
+
+            if (quantity > 0) {
+                values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, quantity - 1);
+            } else {
+                values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, quantity);
+            }
+
+            getContentResolver().update(mCurrentProductUri, values, null, null);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button_order_supplier:
+                orderSupplier();
+                break;
+            case R.id.button_receive_shipment:
+                receiveShipment();
+                Toast.makeText(this, "Received Shipment", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.button_track_sale:
+                trackSale();
+                break;
         }
     }
 }

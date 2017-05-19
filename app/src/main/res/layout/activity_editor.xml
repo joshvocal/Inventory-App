@@ -36,6 +36,7 @@
                     android:id="@+id/edit_product_image"
                     android:layout_width="match_parent"
                     android:layout_height="225dp"
+                    android:background="@color/colorDarkGray"
                     android:inputType="textCapWords" />
 
             </LinearLayout>
@@ -125,6 +126,7 @@
 
             <!-- Label -->
             <TextView
+                android:id="@+id/text_change_quantity"
                 style="@style/CategoryStyle"
                 android:text="Change Quantity" />
 
@@ -159,6 +161,7 @@
 
             <!-- Label -->
             <TextView
+                android:id="@+id/text_email_action"
                 style="@style/CategoryStyle"
                 android:text="Email Action" />
 
@@ -170,7 +173,7 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/button_order_suplier"
+                    android:id="@+id/button_order_supplier"
                     style="@style/EditorFieldStyle"
                     android:gravity="center"
                     android:hint="Order from Supplier"/>

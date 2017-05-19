@@ -13,4 +13,6 @@
     <string name="category_overview">Overview</string>
     <string name="category_image">Image</string>
     <string name="action_add_photo">Add photo</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_details">Details</string>
 </resources>
